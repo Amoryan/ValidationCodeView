@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ValidationCodeView">
+
+        <attr name="vcvItemCount" format="integer" />
+        <attr name="vcvItemWidth" format="dimension|reference" />
+        <attr name="vcvItemHeight" format="dimension|reference" />
+        <attr name="vcvItemDistance" format="dimension|reference" />
+
+        <attr name="vcvBorderWidth" format="dimension|reference" />
+        <attr name="vcvBorderStyle" format="enum">
+            <enum name="RECTANGLE" value="0" />
+            <enum name="LINE" value="1" />
+        </attr>
+        <attr name="vcvBorderRadius" format="dimension|reference" />
+
+        <attr name="vcvTextSize" format="dimension|reference" />
+        <attr name="vcvTextStatus" format="enum">
+            <enum name="SHOW" value="0" />
+            <enum name="HIDE" value="1" />
+        </attr>
+        <attr name="vcvRadiusWhenTextIsHidden" format="dimension|reference" />
+
+        <attr name="vcvCompletedColor" format="dimension|reference" />
+        <attr name="vcvUnCompleteColor" format="dimension|reference" />
+    </declare-styleable>
+</resources>
