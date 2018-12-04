@@ -22,8 +22,7 @@
         <attr name="vcvContentRadiusWhenIsHidden" format="dimension|reference" />
 
         <attr name="vcvCompletedBorderColor" format="color|reference" />
-        <attr name="vcvUnCompleteBorderColor" format="color|reference" />
         <attr name="vcvCompletedContentColor" format="color|reference" />
-        <attr name="vcvUnCompleteContentColor" format="color|reference" />
+        <attr name="vcvUnCompleteBorderColor" format="color|reference" />
     </declare-styleable>
 </resources>

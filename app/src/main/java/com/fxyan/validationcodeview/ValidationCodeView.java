@@ -36,7 +36,6 @@ public final class ValidationCodeView extends View {
     private int completedBorderColor;
     private int unCompleteBorderColor;
     private int completedContentColor;
-    private int unCompleteContentColor;
 
     private Paint paint;
     private Paint.FontMetrics fontMetrics;
@@ -94,7 +93,7 @@ public final class ValidationCodeView extends View {
         contentRadiusWhenIsHidden = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4F, metrics);
 
         completedContentColor = completedBorderColor = Color.parseColor("#1b8fe6");
-        unCompleteContentColor = unCompleteBorderColor = Color.parseColor("#e5e5e5");
+        unCompleteBorderColor = Color.parseColor("#e5e5e5");
     }
 
     private void loadXmlAttrs(AttributeSet attrs) {
@@ -142,9 +141,6 @@ public final class ValidationCodeView extends View {
         }
         if (array.hasValue(R.styleable.ValidationCodeView_vcvCompletedContentColor)) {
             completedContentColor = array.getColor(R.styleable.ValidationCodeView_vcvCompletedContentColor, completedContentColor);
-        }
-        if (array.hasValue(R.styleable.ValidationCodeView_vcvUnCompleteContentColor)) {
-            unCompleteContentColor = array.getColor(R.styleable.ValidationCodeView_vcvUnCompleteContentColor, unCompleteContentColor);
         }
         array.recycle();
     }
@@ -220,7 +216,7 @@ public final class ValidationCodeView extends View {
     }
 
     private void drawItemContent(Canvas canvas, String tmp) {
-        paint.setColor(completedBorderColor);
+        paint.setColor(completedContentColor);
         paint.setStyle(Paint.Style.FILL);
         if (contentStatus == ContentStatus.SHOW) {
             paint.getTextBounds(tmp, 0, tmp.length(), drawTextBounds);
