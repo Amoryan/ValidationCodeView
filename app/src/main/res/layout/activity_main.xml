@@ -7,7 +7,22 @@
     tools:context=".MainActivity">
 
     <com.fxyan.validationcodeview.ValidationCodeView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:id="@+id/codeView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:vcvBorderRadius="5dp"
+        app:vcvBorderStyle="RECTANGLE"
+        app:vcvBorderWidth="1dp"
+        app:vcvCompletedBorderColor="#1b8fe6"
+        app:vcvCompletedContentColor="#1b8fe6"
+        app:vcvContentRadiusWhenIsHidden="4dp"
+        app:vcvContentSize="14sp"
+        app:vcvContentStatus="HIDE"
+        app:vcvIsAheadDraw="true"
+        app:vcvItemCount="6"
+        app:vcvItemDistance="10dp"
+        app:vcvItemHeight="50dp"
+        app:vcvItemWidth="50dp"
+        app:vcvUnCompleteBorderColor="#e5e5e5" />
 
 </FrameLayout>

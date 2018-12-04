@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="ValidationCodeView">
+        <attr name="vcvIsAheadDraw" format="boolean" />
 
         <attr name="vcvItemCount" format="integer" />
         <attr name="vcvItemWidth" format="dimension|reference" />

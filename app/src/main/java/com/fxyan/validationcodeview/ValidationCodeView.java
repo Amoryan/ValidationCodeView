@@ -8,17 +8,25 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.support.annotation.Nullable;
+import android.text.InputType;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.SparseArray;
 import android.util.TypedValue;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputConnection;
+import android.view.inputmethod.InputMethodManager;
 
 /**
  * @author fxYan
  */
 public final class ValidationCodeView extends View {
+
+    private boolean isAheadDraw;
 
     private int itemCount;
     private float itemWidth;
@@ -43,6 +51,8 @@ public final class ValidationCodeView extends View {
     private Rect drawTextBounds;
     private RectF textIsHiddenRect;
     private SparseArray<String> content;
+    private OnInputCompletedListener onInputCompletedListener;
+    private InputMethodManager imm;
 
     public ValidationCodeView(Context context) {
         super(context);
@@ -59,6 +69,10 @@ public final class ValidationCodeView extends View {
 
         loadXmlAttrs(attrs);
 
+        setFocusableInTouchMode(true);
+        imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        setOnKeyListener(new InputKeyListener());
+
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setTextSize(contentSize);
         paint.setStrokeWidth(borderWidth);
@@ -69,16 +83,14 @@ public final class ValidationCodeView extends View {
         textIsHiddenRect = new RectF();
 
         content = new SparseArray<>();
-        content.put(content.size(), "0");
-        content.put(content.size(), "1");
-        content.put(content.size(), "2");
-        content.put(content.size(), "3");
     }
 
     private void configDefaultAttrs() {
         WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics metrics = new DisplayMetrics();
         wm.getDefaultDisplay().getMetrics(metrics);
+
+        isAheadDraw = false;
 
         itemCount = 4;
         itemWidth = itemHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 40F, metrics);
@@ -100,6 +112,10 @@ public final class ValidationCodeView extends View {
         if (attrs == null) return;
 
         TypedArray array = getContext().obtainStyledAttributes(attrs, R.styleable.ValidationCodeView);
+        if (array.hasValue(R.styleable.ValidationCodeView_vcvIsAheadDraw)) {
+            isAheadDraw = array.getBoolean(R.styleable.ValidationCodeView_vcvIsAheadDraw, isAheadDraw);
+        }
+
         if (array.hasValue(R.styleable.ValidationCodeView_vcvItemCount)) {
             itemCount = array.getInt(R.styleable.ValidationCodeView_vcvItemCount, itemCount);
         }
@@ -143,6 +159,25 @@ public final class ValidationCodeView extends View {
             completedContentColor = array.getColor(R.styleable.ValidationCodeView_vcvCompletedContentColor, completedContentColor);
         }
         array.recycle();
+    }
+
+    public void setOnInputCompletedListener(OnInputCompletedListener listener) {
+        this.onInputCompletedListener = listener;
+    }
+
+    @Override
+    public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
+        outAttrs.inputType = InputType.TYPE_CLASS_NUMBER;
+        return super.onCreateInputConnection(outAttrs);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            imm.showSoftInput(this, InputMethodManager.SHOW_FORCED);
+            return true;
+        }
+        return super.onTouchEvent(event);
     }
 
     @Override
@@ -196,11 +231,17 @@ public final class ValidationCodeView extends View {
             itemRect.right = itemRect.left + itemWidth;
             itemRect.bottom = itemRect.top + itemHeight;
 
-            if (i < content.size()) {
+            int tmp = content.size();
+            if (isAheadDraw) {
+                tmp = content.size() + 1;
+            }
+            if (i < tmp) {
                 drawItemBorder(canvas, completedBorderColor);
-                drawItemContent(canvas, content.get(i));
             } else {
                 drawItemBorder(canvas, unCompleteBorderColor);
+            }
+            if (i < content.size()) {
+                drawItemContent(canvas, content.get(i));
             }
         }
     }
@@ -232,6 +273,42 @@ public final class ValidationCodeView extends View {
             textIsHiddenRect.bottom = centerY + contentRadiusWhenIsHidden;
             canvas.drawOval(textIsHiddenRect, paint);
         }
+    }
+
+    private class InputKeyListener implements View.OnKeyListener {
+        @Override
+        public boolean onKey(View v, int keyCode, KeyEvent event) {
+            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                if (keyCode >= KeyEvent.KEYCODE_0 && keyCode <= KeyEvent.KEYCODE_9) {
+                    if (content.size() < itemCount) {
+                        content.put(content.size(), String.valueOf(keyCode - 7));
+                        invalidate();
+                        if (content.size() == itemCount) {
+                            if (onInputCompletedListener != null) {
+                                StringBuilder builder = new StringBuilder();
+                                for (int i = 0; i < content.size(); i++) {
+                                    builder.append(content.get(i));
+                                }
+                                onInputCompletedListener.onInputCompleted(builder.toString());
+                            }
+                            imm.hideSoftInputFromWindow(getWindowToken(), 0);
+                        }
+                        return true;
+                    }
+                } else if (keyCode == KeyEvent.KEYCODE_DEL) {
+                    if (content.size() > 0) {
+                        content.remove(content.size() - 1);
+                        invalidate();
+                    }
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+
+    public interface OnInputCompletedListener {
+        void onInputCompleted(String input);
     }
 
     public static class BorderStyle {
