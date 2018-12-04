@@ -29,12 +29,14 @@ public final class ValidationCodeView extends View {
     private float borderWidth;
     private float borderRadius;
 
-    private float textSize;
-    private int textStatus;
-    private float radiusWhenTextIsHidden;
+    private float contentSize;
+    private int contentStatus;
+    private float contentRadiusWhenIsHidden;
 
-    private int completedColor;
-    private int unCompleteColor;
+    private int completedBorderColor;
+    private int unCompleteBorderColor;
+    private int completedContentColor;
+    private int unCompleteContentColor;
 
     private Paint paint;
     private Paint.FontMetrics fontMetrics;
@@ -59,7 +61,7 @@ public final class ValidationCodeView extends View {
         loadXmlAttrs(attrs);
 
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paint.setTextSize(textSize);
+        paint.setTextSize(contentSize);
         paint.setStrokeWidth(borderWidth);
         fontMetrics = paint.getFontMetrics();
 
@@ -87,12 +89,12 @@ public final class ValidationCodeView extends View {
         borderWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1F, metrics);
         borderRadius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 0F, metrics);
 
-        textSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 14F, metrics);
-        textStatus = TextStatus.SHOW;
-        radiusWhenTextIsHidden = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4F, metrics);
+        contentSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 14F, metrics);
+        contentStatus = ContentStatus.SHOW;
+        contentRadiusWhenIsHidden = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4F, metrics);
 
-        completedColor = Color.parseColor("#1b8fe6");
-        unCompleteColor = Color.parseColor("#e5e5e5");
+        completedContentColor = completedBorderColor = Color.parseColor("#1b8fe6");
+        unCompleteContentColor = unCompleteBorderColor = Color.parseColor("#e5e5e5");
     }
 
     private void loadXmlAttrs(AttributeSet attrs) {
@@ -122,21 +124,27 @@ public final class ValidationCodeView extends View {
             borderRadius = array.getDimension(R.styleable.ValidationCodeView_vcvBorderRadius, borderRadius);
         }
 
-        if (array.hasValue(R.styleable.ValidationCodeView_vcvTextSize)) {
-            textSize = array.getDimension(R.styleable.ValidationCodeView_vcvTextSize, textSize);
+        if (array.hasValue(R.styleable.ValidationCodeView_vcvContentSize)) {
+            contentSize = array.getDimension(R.styleable.ValidationCodeView_vcvContentSize, contentSize);
         }
-        if (array.hasValue(R.styleable.ValidationCodeView_vcvTextStatus)) {
-            textStatus = array.getInt(R.styleable.ValidationCodeView_vcvTextStatus, textStatus);
+        if (array.hasValue(R.styleable.ValidationCodeView_vcvContentStatus)) {
+            contentStatus = array.getInt(R.styleable.ValidationCodeView_vcvContentStatus, contentStatus);
         }
-        if (array.hasValue(R.styleable.ValidationCodeView_vcvRadiusWhenTextIsHidden)) {
-            radiusWhenTextIsHidden = array.getDimension(R.styleable.ValidationCodeView_vcvRadiusWhenTextIsHidden, radiusWhenTextIsHidden);
+        if (array.hasValue(R.styleable.ValidationCodeView_vcvContentRadiusWhenIsHidden)) {
+            contentRadiusWhenIsHidden = array.getDimension(R.styleable.ValidationCodeView_vcvContentRadiusWhenIsHidden, contentRadiusWhenIsHidden);
         }
 
-        if (array.hasValue(R.styleable.ValidationCodeView_vcvCompletedColor)) {
-            completedColor = array.getColor(R.styleable.ValidationCodeView_vcvCompletedColor, completedColor);
+        if (array.hasValue(R.styleable.ValidationCodeView_vcvCompletedBorderColor)) {
+            completedBorderColor = array.getColor(R.styleable.ValidationCodeView_vcvCompletedBorderColor, completedBorderColor);
         }
-        if (array.hasValue(R.styleable.ValidationCodeView_vcvUnCompleteColor)) {
-            unCompleteColor = array.getColor(R.styleable.ValidationCodeView_vcvUnCompleteColor, unCompleteColor);
+        if (array.hasValue(R.styleable.ValidationCodeView_vcvUnCompleteBorderColor)) {
+            unCompleteBorderColor = array.getColor(R.styleable.ValidationCodeView_vcvUnCompleteBorderColor, unCompleteBorderColor);
+        }
+        if (array.hasValue(R.styleable.ValidationCodeView_vcvCompletedContentColor)) {
+            completedContentColor = array.getColor(R.styleable.ValidationCodeView_vcvCompletedContentColor, completedContentColor);
+        }
+        if (array.hasValue(R.styleable.ValidationCodeView_vcvUnCompleteContentColor)) {
+            unCompleteContentColor = array.getColor(R.styleable.ValidationCodeView_vcvUnCompleteContentColor, unCompleteContentColor);
         }
         array.recycle();
     }
@@ -193,10 +201,10 @@ public final class ValidationCodeView extends View {
             itemRect.bottom = itemRect.top + itemHeight;
 
             if (i < content.size()) {
-                drawItemBorder(canvas, completedColor);
+                drawItemBorder(canvas, completedBorderColor);
                 drawItemContent(canvas, content.get(i));
             } else {
-                drawItemBorder(canvas, unCompleteColor);
+                drawItemBorder(canvas, unCompleteBorderColor);
             }
         }
     }
@@ -212,20 +220,20 @@ public final class ValidationCodeView extends View {
     }
 
     private void drawItemContent(Canvas canvas, String tmp) {
-        paint.setColor(completedColor);
+        paint.setColor(completedBorderColor);
         paint.setStyle(Paint.Style.FILL);
-        if (textStatus == TextStatus.SHOW) {
+        if (contentStatus == ContentStatus.SHOW) {
             paint.getTextBounds(tmp, 0, tmp.length(), drawTextBounds);
             float xOffset = (itemRect.left + itemRect.right - drawTextBounds.width()) / 2;
             float yOffset = itemRect.top + itemHeight / 2 + fontMetrics.descent;
             canvas.drawText(tmp, xOffset, yOffset, paint);
-        } else if (textStatus == TextStatus.HIDE) {
+        } else if (contentStatus == ContentStatus.HIDE) {
             float centerX = (itemRect.left + itemRect.right) / 2;
             float centerY = (itemRect.top + itemRect.bottom) / 2;
-            textIsHiddenRect.left = centerX - radiusWhenTextIsHidden;
-            textIsHiddenRect.top = centerY - radiusWhenTextIsHidden;
-            textIsHiddenRect.right = centerX + radiusWhenTextIsHidden;
-            textIsHiddenRect.bottom = centerY + radiusWhenTextIsHidden;
+            textIsHiddenRect.left = centerX - contentRadiusWhenIsHidden;
+            textIsHiddenRect.top = centerY - contentRadiusWhenIsHidden;
+            textIsHiddenRect.right = centerX + contentRadiusWhenIsHidden;
+            textIsHiddenRect.bottom = centerY + contentRadiusWhenIsHidden;
             canvas.drawOval(textIsHiddenRect, paint);
         }
     }
@@ -235,7 +243,7 @@ public final class ValidationCodeView extends View {
         public static final int LINE = 1;
     }
 
-    public static class TextStatus {
+    public static class ContentStatus {
         public static final int SHOW = 0;
         public static final int HIDE = 1;
     }

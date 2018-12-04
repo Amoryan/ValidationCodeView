@@ -14,14 +14,16 @@
         </attr>
         <attr name="vcvBorderRadius" format="dimension|reference" />
 
-        <attr name="vcvTextSize" format="dimension|reference" />
-        <attr name="vcvTextStatus" format="enum">
+        <attr name="vcvContentSize" format="dimension|reference" />
+        <attr name="vcvContentStatus" format="enum">
             <enum name="SHOW" value="0" />
             <enum name="HIDE" value="1" />
         </attr>
-        <attr name="vcvRadiusWhenTextIsHidden" format="dimension|reference" />
+        <attr name="vcvContentRadiusWhenIsHidden" format="dimension|reference" />
 
-        <attr name="vcvCompletedColor" format="dimension|reference" />
-        <attr name="vcvUnCompleteColor" format="dimension|reference" />
+        <attr name="vcvCompletedBorderColor" format="color|reference" />
+        <attr name="vcvUnCompleteBorderColor" format="color|reference" />
+        <attr name="vcvCompletedContentColor" format="color|reference" />
+        <attr name="vcvUnCompleteContentColor" format="color|reference" />
     </declare-styleable>
 </resources>
