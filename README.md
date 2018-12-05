@@ -1,19 +1,18 @@
 # 属性说明
-| vcvItemCount | 验证码位数 |
-| --- | --- | --- |
-| vcvItemWidth | 单个验证码框宽度 |
-| vcvItemHeight | 单个验证码框高度 |
-| vcvItemDistance | 两个验证码框之间的距离 |
-| vcvBorderWidth | 验证码框的宽度 |
-| vcvBorderStyle | 验证码框的样式(矩形，线) |
-| vcvBorderRadius | 框为矩形时候的圆角 |
-| vcvContentStatus  | 验证码的显示状态(明文，密码) |
-| vcvContentSize | 验证码为明文时的文本大小 |
-| vcvContentRadiusWhenIsHidden | 验证码为密文时候的圆半径 |
-| vcvCompletedBorderColor | 已填写内容的边框颜色 |
-| vcvCompletedContentColor | 已填写的文本颜色 |
-| vcvUnCompleteBorderColor | 未填写内容的边框颜色 |
-| vcvIsAheadDraw | 是否提前渲染一个框 |
+1. vcvItemCount验证码位数
+2. vcvItemWidth单个验证码框宽度
+3. vcvItemHeight单个验证码框高度
+4. vcvItemDistance两个验证码框之间的距离
+5. vcvBorderWidth验证码框的宽度
+6. vcvBorderStyle验证码框的样式(矩形，线)
+7. vcvBorderRadius框为矩形时候的圆角
+8. vcvContentStatus验证码的显示状态(明文，密码)
+9. vcvContentSize验证码为明文时的文本大小
+10. vcvContentRadiusWhenIsHidden验证码为密文时候的圆半径
+11. vcvCompletedBorderColor已填写内容的边框颜色
+12. vcvCompletedContentColor已填写的文本颜色 
+13. vcvUnCompleteBorderColor未填写内容的边框颜色
+14. vcvIsAheadDraw是否提前渲染一个框
 # 效果图
 ## vcvIsAheadDraw
 　　vcvIsAheadDraw表示是否提前渲染一个框，默认为false，效果图如下所示。
