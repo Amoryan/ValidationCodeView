@@ -1,5 +1,6 @@
 # 属性说明
 | vcvItemCount | 验证码位数 |
+| --- | --- | --- |
 | vcvItemWidth | 单个验证码框宽度 |
 | vcvItemHeight | 单个验证码框高度 |
 | vcvItemDistance | 两个验证码框之间的距离 |
