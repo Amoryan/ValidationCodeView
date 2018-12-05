@@ -16,12 +16,7 @@
 | vcvIsAheadDraw | 是否提前渲染一个框 |
 # 效果图
 ## vcvIsAheadDraw
-　　vcvIsAheadDraw表示是否提前渲染一个框，默认为false，效果图如下所示。
-　　![isAheadDrawFalse](/images/isAheadDrawFalse.gif)
-　　
-　　如果设置vcvIsAheadDraw为true，效果图如下所示。
-　　![isAheadDrawTrue](/images/isAheadDrawTrue.gif)
-　　
+　　vcvIsAheadDraw表示是否提前渲染一个框，默认为false，效果图如下所示。  　　![isAheadDrawFalse](/images/isAheadDrawFalse.gif)  　　如果设置vcvIsAheadDraw为true，效果图如下所示。  　　![isAheadDrawTrue](/images/isAheadDrawTrue.gif)
 ## vcvBorderStyle
 　　vcvBorderStyle表示边框样式，提供两种边框样式，一种是RECTANGLE，矩形，当边框样式为矩形的时候，可以通过vcvBorderRadius属性来改变矩形的圆角，效果图如下所示。
 　　![borderStyleRectangle](/images/borderStyleRectangle.png)
