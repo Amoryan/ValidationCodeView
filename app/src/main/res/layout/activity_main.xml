@@ -6,19 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <com.fxyan.validationcodeview.ValidationCodeView
+    <com.fxyan.widget.ValidationCodeView
         android:id="@+id/codeView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:vcvBorderRadius="5dp"
-        app:vcvBorderStyle="RECTANGLE"
+        app:vcvBorderStyle="LINE"
         app:vcvBorderWidth="1dp"
         app:vcvCompletedBorderColor="#1b8fe6"
         app:vcvCompletedContentColor="#1b8fe6"
         app:vcvContentRadiusWhenIsHidden="4dp"
         app:vcvContentSize="14sp"
         app:vcvContentStatus="HIDE"
-        app:vcvIsAheadDraw="true"
+        app:vcvIsAheadDraw="false"
         app:vcvItemCount="6"
         app:vcvItemDistance="10dp"
         app:vcvItemHeight="50dp"

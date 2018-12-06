@@ -1,4 +1,4 @@
-package com.fxyan.validationcodeview;
+package com.fxyan.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;

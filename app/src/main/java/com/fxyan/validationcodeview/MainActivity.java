@@ -1,8 +1,10 @@
 package com.fxyan.validationcodeview;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
+
+import com.fxyan.widget.ValidationCodeView;
 
 public class MainActivity extends AppCompatActivity {
 
