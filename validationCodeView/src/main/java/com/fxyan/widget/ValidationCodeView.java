@@ -174,6 +174,7 @@ public final class ValidationCodeView extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            requestFocus();
             imm.showSoftInput(this, InputMethodManager.SHOW_FORCED);
             return true;
         }

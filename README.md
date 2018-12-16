@@ -1,6 +1,6 @@
 # 使用方法
 ```Groovy
-implementation 'com.fxyan.widget:validationCodeView:1.0.0'
+implementation 'com.fxyan.widget:validationCodeView:1.0.1'
 ```
 # 属性说明
 1. vcvItemCount验证码位数
