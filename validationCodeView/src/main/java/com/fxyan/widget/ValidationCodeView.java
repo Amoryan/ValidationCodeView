@@ -69,6 +69,7 @@ public final class ValidationCodeView extends View {
 
         loadXmlAttrs(attrs);
 
+        setFocusable(true);
         setFocusableInTouchMode(true);
         imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         setOnKeyListener(new InputKeyListener());
